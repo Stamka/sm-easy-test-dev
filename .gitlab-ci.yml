@@ -12,12 +12,12 @@ deploy:
   script:
     - export
     #clean
-    - if [ -d "$FOLDER" ]; then rm -r $FOLDER; fi
+    - if [ -d "$FOLDER" ]; then sudo rm -r $FOLDER; fi
     #create
-    - mkdir $FOLDER
-    - chmod 777 $FOLDER
-    - cp -rf $CI_PROJECT_DIR/* $FOLDER
-    - chmod -R 777 $FOLDER
+    - sudo mkdir $FOLDER
+    - sudo chmod 777 $FOLDER
+    - sudo cp -rf $CI_PROJECT_DIR/* $FOLDER
+    - sudo chmod -R 777 $FOLDER
   only:
     - main
     - dev
