@@ -91,6 +91,26 @@ export default class PostService {
         }
         
     }
+
+    static async getUserProjects(userId){
+        console.log("inside func getPositions")
+        try {
+            const url = `https://sm-easy-test.site/api/users/${userId}/projects`
+            console.log(url)
+            const response = await axios.get(url, {
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                }
+              })
+            console.log("inside func getPositions", response)
+            return response;
+        } catch (error) {
+            console.log(error)
+        }
+        
+    }
+
 }
 
 

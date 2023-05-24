@@ -8,7 +8,8 @@ import Loader from '../UI/Loader/Loader'
 
 const Profile = () => {
 
-    const [userId, setUserId] = useState();
+    
+    const [userId, setUserId] = useState(10);
     const [profile, setProfile] = useState({});
 
     const [modal, setModal] = useState(false);
@@ -27,11 +28,8 @@ const Profile = () => {
 
     
     useEffect(()=> {
-        //setUserId(231279140);
-        setUserId(10);
-        console.log("userID=",userId);
-        if (userId !== undefined) fetchProfile();
-    }, [userId])
+        fetchProfile();
+    }, [])
 
     const [positions, setPositions] = useState([{id:"", name:""}]);
 
