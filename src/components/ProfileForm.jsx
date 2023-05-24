@@ -36,6 +36,13 @@ const ProfileForm = ({ userId, previousProfile, positions }) => {
     console.log("tempProfi", tempProfile);
     setProfile(tempProfile);
   };
+  const handleSkillsChange = (selectedOptions) => {
+    const selectedValues = selectedOptions.map((option) => option.value);
+    console.log("SEL VAL", selectedValues);
+    const tempProfile = { ...profile, user_skills: selectedValues };
+    console.log("tempProfi", tempProfile);
+    setProfile(tempProfile);
+  };
   
 
   return (
@@ -67,7 +74,7 @@ const ProfileForm = ({ userId, previousProfile, positions }) => {
       </div>
       <div>
         <div>Укажите свои навыки </div>
-        <CreatableSelect isMulti isSearchable isClearable name="skills" options={positions} />
+        <CreatableSelect onChange={handleSkillsChange} isMulti isSearchable isClearable name="skills"/>
       </div>
       <MyButton onClick={updateProfile}>Изменить профиль</MyButton>
     </form>
