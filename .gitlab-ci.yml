@@ -1,0 +1,23 @@
+variables:
+  FOLDER: "/opt/sm_frontend"
+  
+stages:
+  - deploy
+
+
+deploy:
+  stage: deploy
+  tags:
+    - deploy_shell
+  script:
+    - export
+    #clean
+    - if [ -d "$FOLDER" ]; then rm -r $FOLDER; fi
+    #create
+    - mkdir $FOLDER
+    - chmod 777 $FOLDER
+    - cp -rf $CI_PROJECT_DIR/* $FOLDER
+    - chmod -R 777 $FOLDER
+  only:
+    - main
+    - dev
