@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PostService from '../API/PostService';
 import { useFetching } from '../hooks/useFetching';
+import ProjectItem from '../ProjectItem';
 
 const Projects = () => {
   const [userId, setUserId] = useState(231279140);
@@ -15,6 +16,7 @@ const Projects = () => {
       console.log(error);
     }
   };
+
 
   const parseProjects = (userProjects) => {
     if (userProjects !== undefined) {
@@ -37,7 +39,11 @@ const Projects = () => {
       {console.log(userProjects)}
       My projects
       { userProjects
-        ? <div>{parseProjects(userProjects)}</div>
+        ? <div>{userProjects.map((project, index) => 
+          <ProjectItem key={index} project={project}/>
+          )}
+          <hr/>
+          </div>
         : <h1>Loading</h1> 
       }
     </div>
