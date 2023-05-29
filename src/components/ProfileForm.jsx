@@ -3,7 +3,6 @@ import MyButton from './UI/button/MyButton';
 import MyInput from './UI/input/MyInput';
 import PostService from './API/PostService';
 import Select from 'react-select';
-import { useFetching } from './hooks/useFetching';
 import CreatableSelect from 'react-select/creatable';
 
 const ProfileForm = ({ userId, previousProfile, positions }) => {
@@ -16,7 +15,7 @@ const ProfileForm = ({ userId, previousProfile, positions }) => {
 
   
 
-  const [updateProfile, isProfileLoading, profileError] = useFetching(async () => {
+  const updateProfile = async () => {
     try {
       console.log('All is OK:', profile);
       const response = await PostService.updateProfile(userId, profile);
@@ -24,7 +23,7 @@ const ProfileForm = ({ userId, previousProfile, positions }) => {
     } catch (error) {
       console.error('Error updating profile:', error);
     }
-  });
+  };
 
   console.log('NEW_profile', profile);
   console.log('prev_profile', previousProfile);
