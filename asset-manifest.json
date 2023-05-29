@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/sm-easy-test-dev.github.io/static/css/main.a3c65a2d.css",
+    "main.js": "/sm-easy-test-dev.github.io/static/js/main.03b148ab.js",
+    "index.html": "/sm-easy-test-dev.github.io/index.html",
+    "main.a3c65a2d.css.map": "/sm-easy-test-dev.github.io/static/css/main.a3c65a2d.css.map",
+    "main.03b148ab.js.map": "/sm-easy-test-dev.github.io/static/js/main.03b148ab.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a3c65a2d.css",
+    "static/js/main.03b148ab.js"
+  ]
+}
