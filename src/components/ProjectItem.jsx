@@ -8,7 +8,7 @@ const ProjectItem = ({ project }) => {
   const [projectTasks, setProjectTasks] = useState([]);
   const navigate = useNavigate();
   const handleOpenProject = () => {
-    navigate(`/myprojects/${project.id}`, { state: { projectTasks} });
+    navigate(`/myprojects/${project.id}`, { state: {projectTasks, project}});
   };
   const fetchTasks = async (projectId) => {
     try {
@@ -20,6 +20,7 @@ const ProjectItem = ({ project }) => {
   };
   useEffect(() => {
     fetchTasks(project.id);
+
   }, [project.id]);
 
   return (
