@@ -1,0 +1,70 @@
+.status-block {
+    margin-bottom: 30px;
+    align-items: center;
+  }
+  
+  .status-heading {
+    font-size: 20px;
+    font-weight: bold;
+    color: aqua;
+  }
+  
+  .task-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .task-list li {
+    margin-bottom: 10px;
+  }
+  
+  .status-block.HOLD {
+    background-color: lightblue;
+  }
+  .status-block.FINDING_EXECUTOR {
+    background-color: rgb(243, 246, 172);
+  }
+
+  .status-block.TO_DO {
+    background-color: rgb(188, 160, 193);
+  }
+  
+  .status-block.IN_PROGRESS {
+    background-color: lightgreen;
+  }
+  .status-block.REVIEW {
+    background-color: lightyellow;
+  }
+  .status-block.DONE {
+    background-color: rgb(143, 230, 138);
+  }
+
+  .task-block {
+    width: 80%;
+    margin: 0 auto;
+    background: rgba(143, 169, 207, 0.9);
+    /* ул */
+    box-shadow: 2px 4px 4px rgba(35, 89, 169, 0.3);
+    border-radius: 15px;
+  }
+
+  .task-name {
+    width: 133px;
+    margin-left: 20px;
+    margin-top: 50px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    display: flex;
+
+    color: rgba(243, 244, 248, 0.75);
+
+  }
+
+  .button-container {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  

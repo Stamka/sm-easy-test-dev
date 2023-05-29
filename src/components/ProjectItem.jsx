@@ -1,21 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import PostService from './API/PostService';
 import './ProjectItem.css'
+import { useNavigate } from 'react-router';
+import MyButton from './UI/button/MyButton';
 
 const ProjectItem = ({ project }) => {
   const [projectTasks, setProjectTasks] = useState([]);
-
+  const navigate = useNavigate();
+  const handleOpenProject = () => {
+    navigate(`/myprojects/${project.id}`, { state: { projectTasks} });
+  };
+  const fetchTasks = async (projectId) => {
+    try {
+      const response = await PostService.getProjectTasks(projectId);
+      setProjectTasks(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const response = await PostService.getProjectTasks(project.id);
-        setProjectTasks(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchTasks();
+    fetchTasks(project.id);
   }, [project.id]);
 
   return (
@@ -30,6 +34,7 @@ const ProjectItem = ({ project }) => {
           )}
         </div>
       </div>
+      <MyButton onClick={handleOpenProject} >Открыть</MyButton>
     </div>
   );
 };
