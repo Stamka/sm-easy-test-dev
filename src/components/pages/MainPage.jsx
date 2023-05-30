@@ -8,16 +8,15 @@ const MainPage = () => {
 
   const navigate = useNavigate();
   const [userId, setUserId] = useState(0)
-  if (window.Telegram !==undefined){
+ if (window.Telegram.initDataUnsafe !==undefined){
       setUserId(window.Telegram.WebApp.initDataUnsafe.user.id)
-  }
-  
+ }
 
   return (
     <div>
       <div>
         
-        {userId
+        {(userId !== 0)
         ? <div>{userId}</div>
         : <div>Welcome Username!</div>
         }
