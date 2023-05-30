@@ -10,16 +10,17 @@ deploy:
   tags:
     - deploy_shell
   script:
+    - sudo su
     - export
     #clean
-    - if [ -d "$FOLDER" ]; then sudo rm -rf $FOLDER; fi
+    - if [ -d "$FOLDER" ]; then rm -rf $FOLDER; fi
     #create
-    - sudo mkdir $FOLDER
-    - sudo chmod 777 $FOLDER
-    - sudo cp -rf $CI_PROJECT_DIR/* $FOLDER
-    - sudo chmod -R 777 $FOLDER
+    - mkdir $FOLDER
+    - chmod 777 $FOLDER
+    - cp -rf $CI_PROJECT_DIR/* $FOLDER
+    - chmod -R 777 $FOLDER
     - cd $FOLDER
-    - sudo npm run build
+    - npm run build
   only:
     - main
     - dev
