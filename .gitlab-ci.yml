@@ -18,8 +18,6 @@ deploy:
     - sudo chmod 777 $FOLDER
     - sudo cp -rf $CI_PROJECT_DIR/* $FOLDER
     - sudo chmod -R 777 $FOLDER
-    - sudo bash -c "cd $FOLDER"
-    - sudo bash -c "npm run build"
   only:
     - main
     - dev
