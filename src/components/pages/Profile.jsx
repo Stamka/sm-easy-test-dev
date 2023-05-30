@@ -5,10 +5,19 @@ import ProfileForm from '../ProfileForm';
 import MyModal from '../UI/MyModal/MyModal';
 import MyButton from '../UI/button/MyButton';
 import Loader from '../UI/Loader/Loader'
+const tg = window.Telegram.WebApp;
+
 
 const Profile = () => {
 
-    
+
+      useEffect(()=>{
+        tg.ready();
+      })
+
+      const onClose = () => {
+        tg.close();
+      }
     const [userId, setUserId] = useState(10);
     const [profile, setProfile] = useState({});
 
@@ -28,6 +37,7 @@ const Profile = () => {
 
     
     useEffect(()=> {
+        setUserId(tg.initDataUnsafe?.user?.id)
         fetchProfile();
     }, [])
 

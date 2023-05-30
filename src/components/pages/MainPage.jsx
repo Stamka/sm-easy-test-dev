@@ -1,25 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import MyButton from '../UI/button/MyButton'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+const tg = window.Telegram.WebApp;
 
 const MainPage = () => {
 
   const navigate = useNavigate();
-  const [userId, setUserId] = useState(0)
- if (window.Telegram.initDataUnsafe !==undefined){
-      setUserId(window.Telegram.WebApp.initDataUnsafe.user.id)
- }
+  useEffect(()=>{
+    tg.ready();
+  })
+
+  const onClose = () => {
+    tg.close();
+  }
 
   return (
     <div>
+      Hello! {tg.initDataUnsafe?.user?.username}
       <div>
         
-        {(userId !== 0)
-        ? <div>{userId}</div>
-        : <div>Welcome Username!</div>
-        }
       </div>
         <div>
         <MyButton onClick={ () => navigate(`/mytasks`)} >My Tasks</MyButton>
