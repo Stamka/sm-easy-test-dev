@@ -11,14 +11,10 @@ const tg = window.Telegram.WebApp;
 const Profile = () => {
 
 
-      useEffect(()=>{
-        tg.ready();
-      })
-
       const onClose = () => {
         tg.close();
       }
-    const [userId, setUserId] = useState(10);
+    const [userId, setUserId] = useState();
     const [profile, setProfile] = useState({});
 
     const [modal, setModal] = useState(false);
@@ -37,9 +33,10 @@ const Profile = () => {
 
     
     useEffect(()=> {
-        setUserId(tg.initDataUnsafe?.user?.id)
+        tg.ready();
+        setUserId(tg.initDataUnsafe?.user?.id || 10)
         fetchProfile();
-    }, [])
+    }, [userId])
 
     const [positions, setPositions] = useState([{id:"", name:""}]);
 

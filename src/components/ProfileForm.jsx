@@ -5,6 +5,7 @@ import PostService from './API/PostService';
 import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 
+
 const ProfileForm = ({ userId, previousProfile, positions }) => {
 
   const [profile, setProfile] = useState(previousProfile);
@@ -16,14 +17,27 @@ const ProfileForm = ({ userId, previousProfile, positions }) => {
   
 
   const updateProfile = async () => {
-    try {
-      console.log('All is OK:', profile);
-      const response = await PostService.updateProfile(userId, profile);
-      console.log('Response=', response.data);
-    } catch (error) {
-      console.error('Error updating profile:', error);
+
+    if (Object.keys(previousProfile).length === 0){
+      try {
+        setProfile({...profile, "user_id":userId})
+        console.log('All is OK:', profile);
+        const response = await PostService.createProfile(profile);
+        console.log('Response=', response.data);
+      } catch (error) {
+        console.error('Error updating profile:', error);
+      }
+    }else{
+        try {
+          setProfile({...profile, "user_id":userId})
+          console.log('All is OK:', profile);
+          const response = await PostService.updateProfile(userId, profile);
+          console.log('Response=', response.data);
+        } catch (error) {
+          console.error('Error updating profile:', error);
+        }
+      };
     }
-  };
 
   console.log('NEW_profile', profile);
   console.log('prev_profile', previousProfile);
@@ -31,14 +45,14 @@ const ProfileForm = ({ userId, previousProfile, positions }) => {
   const handlePositionChange = (selectedOptions) => {
     const selectedValues = selectedOptions.map((option) => option.value);
     console.log("SEL VAL", selectedValues);
-    const tempProfile = { ...profile, user_positions: selectedValues };
+    const tempProfile = { ...profile, user_positions: selectedValues, "user_id":userId };
     console.log("tempProfi", tempProfile);
     setProfile(tempProfile);
   };
   const handleSkillsChange = (selectedOptions) => {
     const selectedValues = selectedOptions.map((option) => option.value);
     console.log("SEL VAL", selectedValues);
-    const tempProfile = { ...profile, user_skills: selectedValues };
+    const tempProfile = { ...profile, user_skills: selectedValues, "user_id":userId };
     console.log("tempProfi", tempProfile);
     setProfile(tempProfile);
   };
@@ -49,21 +63,21 @@ const ProfileForm = ({ userId, previousProfile, positions }) => {
       <div>Имя </div>
       <MyInput
         value={profile.first_name}
-        onChange={(e) => setProfile({ ...profile, first_name: e.target.value })}
+        onChange={(e) => setProfile({ ...profile, first_name: e.target.value, "user_id":userId })}
         type="text"
         placeholder="Имя"
       />
       <div>Фамилия </div>
       <MyInput
         value={profile.last_name}
-        onChange={(e) => setProfile({ ...profile, last_name: e.target.value })}
+        onChange={(e) => setProfile({ ...profile, last_name: e.target.value, "user_id":userId })}
         type="text"
         placeholder="Фамилия"
       />
       <div>Описание </div>
       <MyInput
         value={profile.description}
-        onChange={(e) => setProfile({ ...profile, description: e.target.value })}
+        onChange={(e) => setProfile({ ...profile, description: e.target.value, "user_id":userId })}
         type="text"
         placeholder="Описание"
       />

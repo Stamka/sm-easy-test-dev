@@ -1,4 +1,5 @@
 import axios from "axios"
+import { v4 as uuidv4 } from 'uuid';
 
 export default class PostService {
     static async getAll(limit = 10, page = 1){
@@ -43,10 +44,10 @@ export default class PostService {
         
     }
     static async getProfile(userId){
-        console.log("inside func getProfile", userId)
+        console.log("inside func getProfile", userId, typeof(userId))
         try {
-            const url = `https://sm-easy-test.site/api/users/${userId}/worksheet/`
-            console.log(url)
+            const url = 'https://sm-easy-test.site/api/users/'+ userId.toString() + '/worksheet/';
+            console.log("URL=",url);
             const response = await axios.get(url);
             console.log(response)
             return response;
@@ -56,11 +57,31 @@ export default class PostService {
         
     }
     static async updateProfile(userId ,profile){
-        console.log("inside func getProfile", profile)
+        console.log("inside func updateProfile", profile)
+        profile = {...profile, "id": uuidv4()}
         try {
-            const url = `https://sm-easy-test.site/api/users/${userId}/worksheet/update`
-            console.log(url)
+            const url = `https://sm-easy-test.site/api/users/${userId.toString()}/worksheet/update`
+            console.log(url, profile)
             const response = await axios.put(url, profile, {
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                }
+              })
+            console.log(response)
+            return response;
+        } catch (error) {
+            console.log(error)
+        }
+        
+    }
+    static async createProfile(profile){
+        console.log("inside func updateProfile", profile)
+        profile = {...profile, "id": uuidv4()}
+        try {
+            const url = "https://sm-easy-test.site/api/worksheet/create";
+            console.log(url, profile)
+            const response = await axios.post(url, profile, {
                 headers: {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json'
@@ -95,7 +116,7 @@ export default class PostService {
     static async getUserProjects(userId){
         console.log("inside func getPositions")
         try {
-            const url = `https://sm-easy-test.site/api/users/${userId}/projects`
+            const url = `https://sm-easy-test.site/api/users/${userId.toString()}/projects`
             console.log(url)
             const response = await axios.get(url, {
                 headers: {
@@ -113,7 +134,7 @@ export default class PostService {
 
     static async getProjectTasks(projectId){
         try {
-            const url = `https://sm-easy-test.site/api/projects/${projectId}/tasks`
+            const url = `https://sm-easy-test.site/api/projects/${projectId.toString()}/tasks`
             const response = await axios.get(url, {
                 headers: {
                   'Accept': 'application/json',

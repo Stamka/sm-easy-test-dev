@@ -20,7 +20,6 @@ const MainPage = () => {
     <div>
       Hello! {tg.initDataUnsafe?.user?.username}
       <div>
-        
       </div>
         <div>
         <MyButton onClick={ () => navigate(`/mytasks`)} >My Tasks</MyButton>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useLocation, useParams } from 'react-router';
 import AddTask from '../AddTask';
+import EditProject from '../EditProject';
 import MyButton from '../UI/button/MyButton';
 import '../UI/css/ProjectOverview.css'
 
@@ -71,7 +72,7 @@ const parseTaskStatusForButton = (status) => {
           )}
         </div>
       </div>
-      <MyButton>Edit Project</MyButton>
+      <EditProject project={currentProject}/>
       <AddTask/>
     </div>)
       : <div>Loading</div>

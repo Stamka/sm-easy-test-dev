@@ -11,7 +11,7 @@ const AddTask = () => {
     <div>
         <MyButton onClick={() => setModal(true)}>Create New Task!</MyButton>
         <MyModal visible={modal} setVisible={setModal}>
-            <TaskCreatingForm/>
+            <TaskCreatingForm action={"add"}/>
         </MyModal>
     </div>
   )
