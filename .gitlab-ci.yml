@@ -12,7 +12,7 @@ deploy:
   script:
     - export
     #clean
-    - if [ -d "$FOLDER" ]; then rm -rf $FOLDER; fi
+    - if [ -d "$FOLDER" ]; then sudo rm -rf $FOLDER; fi
     #create
     - mkdir $FOLDER
     - chmod 777 $FOLDER
