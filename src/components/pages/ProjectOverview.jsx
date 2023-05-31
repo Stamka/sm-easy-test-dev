@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router';
 import AddTask from '../AddTask';
 import EditProject from '../EditProject';
 import MyButton from '../UI/button/MyButton';
 import '../UI/css/ProjectOverview.css'
+const tg = window.Telegram.WebApp;
 
 
 
@@ -12,6 +13,13 @@ const ProjectOverview = () => {
   const params = useParams()
   const projectTasks = location.state?.projectTasks;
   const currentProject = location.state?.project;
+  const [userId, setUserId] = useState();
+
+  useEffect(()=>{
+    tg.ready();
+    setUserId(tg.initDataUnsafe?.user?.id || 231279140)
+  })
+
   console.log("CurProj", location, currentProject)
   const tasksByStatus = projectTasks.reduce((acc, task) => {
     if (acc[task.status]) {
@@ -89,6 +97,9 @@ const parseTaskStatusForButton = (status) => {
                 <div>Status: {task.status}</div>
                 <div>Description: {task.description}</div>
                 {parseTaskStatusForButton(task.status)}
+                {(task.creator_id === userId)
+                ? <MyButton>Delete Task</MyButton>
+                : <></>}
                     
           
                 
