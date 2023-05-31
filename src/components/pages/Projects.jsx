@@ -21,6 +21,9 @@ const Projects = () => {
     }
   };
 
+  const deleteProjectAndUpdate = (projectId) => {
+    setUserProjects(prevProjects => prevProjects.filter(project => project.id !== projectId));
+  };
 
   const parseProjects = (userProjects) => {
     if (userProjects !== undefined) {
@@ -50,7 +53,7 @@ const Projects = () => {
       </div>
       { userProjects
         ? <div>{userProjects.map((project, index) => 
-          <ProjectItem key={index} project={project}/>
+          <ProjectItem key={index} project={project} onDeleteProject={deleteProjectAndUpdate}/>
           )}
           <hr/>
           </div>

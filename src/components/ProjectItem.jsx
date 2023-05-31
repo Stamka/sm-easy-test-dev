@@ -3,9 +3,11 @@ import PostService from './API/PostService';
 import './ProjectItem.css'
 import { useNavigate } from 'react-router';
 import MyButton from './UI/button/MyButton';
+import MyModal from './UI/MyModal/MyModal';
 
-const ProjectItem = ({ project }) => {
+const ProjectItem = ({ project, onDeleteProject }) => {
   const [projectTasks, setProjectTasks] = useState([]);
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const navigate = useNavigate();
   const handleOpenProject = () => {
     navigate(`/myprojects/${project.id}`, { state: {projectTasks, project}});
@@ -23,6 +25,14 @@ const ProjectItem = ({ project }) => {
 
   }, [project.id]);
 
+  const deleteProject = async (projectId) => {
+    console.log("Delete project", projectId);
+    const response = await PostService.deleteProject(projectId);
+    onDeleteProject(projectId); 
+    setDeleteConfirmation(false);
+  }
+
+
   return (
     <div className="project-item">
       <div className="project-info">
@@ -36,6 +46,15 @@ const ProjectItem = ({ project }) => {
         </div>
       </div>
       <MyButton onClick={handleOpenProject} >Открыть</MyButton>
+      <MyButton onClick={()=>{setDeleteConfirmation(true)}}>Удалить проект</MyButton>
+      <MyModal  visible={deleteConfirmation} setVisible={setDeleteConfirmation}>
+            <MyButton onClick={() => deleteProject(project.id)}>
+              Удалить
+            </MyButton>
+            <MyButton>
+              Отмена
+            </MyButton>
+      </MyModal>
     </div>
   );
 };

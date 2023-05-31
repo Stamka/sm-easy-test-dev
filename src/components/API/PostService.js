@@ -179,6 +179,20 @@ export default class PostService {
         
     }
 
+    static async deleteProject(projectId){
+        console.log("inside func projectDelete", projectId)
+        try {
+            const url = 'https://sm-easy-test.site/api/projects/'+ projectId.toString();
+            console.log(url)
+            const response = await axios.delete(url);
+            console.log(response)
+            return response;
+        } catch (error) {
+            console.log(error)
+        }
+        
+    }
+
 }
 
 

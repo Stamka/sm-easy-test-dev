@@ -1,5 +1,5 @@
 import React from 'react'
-import TaskCreatingForm from './TaskCreatingForm';
+import TaskForm from './TaskForm';
 import MyModal from './UI/MyModal/MyModal'
 import MyButton from './UI/button/MyButton';
 import { useState } from 'react';
@@ -11,7 +11,7 @@ const AddTask = () => {
     <div>
         <MyButton onClick={() => setModal(true)}>Create New Task!</MyButton>
         <MyModal visible={modal} setVisible={setModal}>
-            <TaskCreatingForm action={"add"}/>
+            <TaskForm action={"add"}/>
         </MyModal>
     </div>
   )
