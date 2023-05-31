@@ -1,36 +1,83 @@
-import React, {useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import MyInput from './UI/input/MyInput'
 import DatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import MyButton from './UI/button/MyButton';
+import PostService from './API/PostService';
+import { components } from 'react-select';
+const tg = window.Telegram.WebApp;
+
 
 const ProjectForm = ({action, PrevProject = {}, userId}) => {
+
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [budget, setBudget] = useState(0);
+  const [newProject, setNewProject] = useState({})
 
   const [value, onChange] = useState(new Date());
   const [checkboxValue, setCheckboxValue] = useState(true);
 
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  const handleBudgetChange = (event) => {
+    setBudget(event.target.value);
+  };
+
   const handleCheckBox = () => {
     setCheckboxValue(!checkboxValue);
   }
-  console.log(value);
-  console.log(checkboxValue);
+
+  useEffect(()=> {
+    tg.ready()
+    setName(PrevProject?.name)
+    setDescription(PrevProject?.description)
+    setBudget(PrevProject?.budget)
+
+  }, [])
+
+  const addProject = async () => {
+    const tempProject = {
+      "user_id":userId,
+      "name":name,
+      "description":description,
+      "budget":budget || 0
+
+    }
+    console.log("newProject=",tempProject);
+    const response = await PostService.addProject(tempProject);
+
+    console.log("kekv")
+    console.log("Response=",response);
+  }
+  console.log("Proejct userId=", userId);
   return (
     <form>
         <MyInput
         type="text"
         placeholder="Название проекта"
-        value={PrevProject?.name}
+        value={name}
+        onChange={handleNameChange}
         />
         <MyInput
         type="text"
         placeholder="Описание проекта"
-        value={PrevProject?.description}
+        value={description}
+        onChange={handleDescriptionChange}
         />
         <MyInput
         type="number"
         placeholder="Введите бюджет проекта"
-        value={PrevProject?.budget}
+        value={budget}
+        onChange={handleBudgetChange}
         />
         <div>
           Дедлайн проекта <input type="checkbox" checked={checkboxValue} onChange={handleCheckBox} />
@@ -41,7 +88,7 @@ const ProjectForm = ({action, PrevProject = {}, userId}) => {
         </div>
 
         {action === "add"
-        ? <MyButton>Добавить проект</MyButton>
+        ? <MyButton onClick={addProject}>Добавить проект</MyButton>
         : <MyButton>Изменить проект</MyButton> 
         }
 

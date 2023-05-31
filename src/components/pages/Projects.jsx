@@ -24,9 +24,9 @@ const Projects = () => {
 
   const parseProjects = (userProjects) => {
     if (userProjects !== undefined) {
-      console.log("kekv", userProjects);
+      //console.log("kekv", userProjects);
       const projects = userProjects.map(project => project.name);
-      console.log("asdasd", projects);
+      //console.log("asdasd", projects);
       return projects.join(' ');
     }
   };
@@ -34,9 +34,9 @@ const Projects = () => {
   useEffect(() => {
     tg.ready();
     setUserId(tg.initDataUnsafe?.user?.id || 231279140)
-    console.log(userId);
+    //console.log(userId);
     fetchProjects(userId);
-    console.log("useeff", userProjects);
+    //console.log("useeff", userProjects);
     parseProjects(userProjects);
   }, [userId]);
 

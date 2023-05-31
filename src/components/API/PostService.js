@@ -141,12 +141,27 @@ export default class PostService {
                   'Content-Type': 'application/json'
                 }
               })
-            console.log("inside func getProjetcsTasks", response)
+            //console.log("inside func getProjetcsTasks", response)
             return response
 
         } catch (error) {
             console.log(error)
         }
+    }
+
+    static async addProject(project){
+            const url = "https://sm-easy-test.site/api/projects/"
+            project = {...project, "id": uuidv4()}
+            const response = await axios.post(url, project,{
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                }
+              })
+            console.log("inside func addProjects", response)
+            return response
+
+       
     }
 
 }

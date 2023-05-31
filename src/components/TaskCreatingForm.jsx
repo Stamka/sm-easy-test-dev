@@ -3,6 +3,10 @@ import MyInput from './UI/input/MyInput'
 import MyButton from './UI/button/MyButton'
 
 const TaskCreatingForm = ({action}) => {
+
+  const addTask = () => {
+
+  }
   return (
     <form>
         <MyInput

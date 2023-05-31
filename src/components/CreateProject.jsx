@@ -9,7 +9,7 @@ const CreateProject = ({modal, setModal}) => {
 
   useEffect(()=> {
         tg.ready();
-        setUserId(tg.initDataUnsafe?.user?.id || 10)
+        setUserId(tg.initDataUnsafe?.user?.id || 231279140)
     }, [userId])
     
   return (
