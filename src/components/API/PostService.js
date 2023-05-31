@@ -162,6 +162,21 @@ export default class PostService {
             return response
 
        
+            
+    }
+
+    static async deleteTask(taskId){
+        console.log("inside func taskDelte", taskId)
+        try {
+            const url = 'https://sm-easy-test.site/api/tasks/'+ taskId.toString();
+            console.log(url)
+            const response = await axios.delete(url);
+            console.log(response)
+            return response;
+        } catch (error) {
+            console.log(error)
+        }
+        
     }
 
 }

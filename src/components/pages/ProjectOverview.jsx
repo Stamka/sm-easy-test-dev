@@ -4,6 +4,7 @@ import AddTask from '../AddTask';
 import EditProject from '../EditProject';
 import MyButton from '../UI/button/MyButton';
 import '../UI/css/ProjectOverview.css'
+import PostService from '../API/PostService';
 const tg = window.Telegram.WebApp;
 
 
@@ -11,7 +12,7 @@ const tg = window.Telegram.WebApp;
 const ProjectOverview = () => {
   const location = useLocation();
   const params = useParams()
-  const projectTasks = location.state?.projectTasks;
+  const [projectTasks, setProjectTasks] = useState(location.state?.projectTasks || []);
   const currentProject = location.state?.project;
   const [userId, setUserId] = useState();
 
@@ -29,6 +30,13 @@ const ProjectOverview = () => {
     }
     return acc;
   }, {});
+
+const deleteTask = async (taskId) => {
+  console.log(taskId);
+  const response = await PostService.deleteTask(taskId);
+  setProjectTasks(projectTasks.filter((_, i)=> _.id !== taskId))
+
+}
 
 const parseTaskStatusForButton = (status) => {
   if (status === 'HOLD'){
@@ -98,7 +106,7 @@ const parseTaskStatusForButton = (status) => {
                 <div>Description: {task.description}</div>
                 {parseTaskStatusForButton(task.status)}
                 {(task.creator_id === userId)
-                ? <MyButton>Delete Task</MyButton>
+                ? <MyButton onClick={() => deleteTask(task.id)}>Delete Task</MyButton>
                 : <></>}
                     
           
