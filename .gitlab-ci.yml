@@ -20,7 +20,7 @@ deploy:
     - sudo cp -r /etc/nginx/ $FOLDER
     - sudo chmod -R 777 $FOLDER
     
-    - sudo docker-compose -f /opt/docker-compose/docker-compose.yml up nginx -d --build
+    - sudo docker-compose -f /opt/docker-compose/docker-compose.yml up -d --build nginx
   only:
     - main
     - dev
