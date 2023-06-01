@@ -113,6 +113,30 @@ export default class PostService {
         
     }
 
+    static async getParsedPositions(){
+        
+        try {
+            const url = `https://sm-easy-test.site/api/positions/`
+            console.log(url)
+            const response = await axios.get(url, {
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                }
+              })
+            console.log("inside func getPositions", response)
+    
+          const positionsList = response.data.map(item => ({
+            value: item.id,
+            label: item.name
+          }));
+          console.log("posis", positionsList)
+          return positionsList
+        } catch (error) {
+          console.error('Error fetching positions:', error);
+        }
+      }
+
     static async getUserProjects(userId){
         console.log("inside func getPositions")
         try {
@@ -192,6 +216,8 @@ export default class PostService {
         }
         
     }
+
+    
 
 }
 

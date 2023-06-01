@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
-import { useState } from 'react';
 import MyButton from '../UI/button/MyButton'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import PostService from '../API/PostService';
+
+
 const tg = window.Telegram.WebApp;
 
 const MainPage = () => {
@@ -15,6 +16,13 @@ const MainPage = () => {
   const onClose = () => {
     tg.close();
   }
+
+  const getPa = async () => {
+    const response = await PostService.getParsedPositions()
+    return response
+  }
+  console.log("Test Positions:", getPa())
+
 
   return (
     <div>

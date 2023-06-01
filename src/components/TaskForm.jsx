@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MyInput from './UI/input/MyInput';
 import MyButton from './UI/button/MyButton';
 import PostService from './API/PostService';
+import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
+const tg = window.Telegram.WebApp;
 
-const TaskCreatingForm = ({ action }) => {
+const TaskCreatingForm = ({ action, positions, projectId }) => {
   const [title, setTitle] = useState('');
+
+  const [userId, setUserId] = useState(0)
   const [description, setDescription] = useState('');
   const [cost, setCost] = useState(0);
 
+  const [taskPosition, setTaskPosition] = useState("");
 
+  useEffect(()=> {
+    tg.ready();
+    setUserId(tg.initDataUnsafe?.user?.id || 231279140)
+}, [userId])
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
@@ -21,11 +31,22 @@ const TaskCreatingForm = ({ action }) => {
     setCost(event.target.value);
   };
 
+  const handlePositionChange = (event) => {
+
+    console.log(event.value)
+    setTaskPosition(event.value);
+  };
+
+  
+
   const addTask = () => {
     const task = {
+      "project_id": projectId,
       "name": title,
       "description": description,
-      "price": cost
+      "price": cost,
+      "creator_id": userId
+
     };
     console.log(task)
 
@@ -36,6 +57,8 @@ const TaskCreatingForm = ({ action }) => {
     setCost(0);
   };
 
+  console.log(positions)
+  console.log(projectId)
   return (
     <form>
       <MyInput
@@ -56,6 +79,9 @@ const TaskCreatingForm = ({ action }) => {
         value={cost}
         onChange={handleCostChange}
       />
+
+      <div>Выбери позиции для поиска вакансий </div>
+      <Select onChange={handlePositionChange} isSearchable isClearable name="positions" options={positions} />
 
       {action === 'add' ? (
         <MyButton onClick={addTask}>Добавить задачу</MyButton>

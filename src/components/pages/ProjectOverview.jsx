@@ -89,7 +89,7 @@ const parseTaskStatusForButton = (status) => {
         </div>
       </div>
       <EditProject project={currentProject}/>
-      <AddTask/>
+      <AddTask projectId={params.id}/>
     </div>)
       : <div>Loading</div>
       }
