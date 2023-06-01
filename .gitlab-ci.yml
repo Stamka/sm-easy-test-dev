@@ -19,7 +19,7 @@ deploy:
     - sudo cp -rf $CI_PROJECT_DIR/* $FOLDER
     - sudo chmod -R 777 $FOLDER
     - sudo cp -r /etc/nginx/ .
-    - docker-compose -f /opt/docker-compose/docker-compose.yml up -d --build nginx
+    - sudo docker-compose -f /opt/docker-compose/docker-compose.yml up -d --build nginx
   only:
     - main
     - dev
