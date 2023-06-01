@@ -1,7 +1,7 @@
 import React from 'react';
 import MyButton from './UI/button/MyButton';
 
-const TasksList = ( rawTasks ) => {
+const TasksList = ( {rawTasks} ) => {
 
     const tasksByStatus = rawTasks.reduce((acc, task) => {
         if (acc[task.status]) {

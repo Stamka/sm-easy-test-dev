@@ -50,7 +50,7 @@ const TaskCreatingForm = ({ action, positions, projectId, onAdded }) => {
     };
     console.log(task)
 
-   //const response = PostService.addTask(task);
+   const response = PostService.addTask(task);
 
     setTitle('');
     setDescription('');

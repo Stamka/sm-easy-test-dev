@@ -13,14 +13,16 @@ const tg = window.Telegram.WebApp;
 const ProjectOverview = () => {
   const location = useLocation();
   const params = useParams()
-  const [projectTasks, setProjectTasks] = useState(location.state?.projectTasks || []);
+  const [projectTasks, setProjectTasks] = useState([]);
   const [userId, setUserId] = useState();
-  const [currentProject, setCurrentProject] = useState(location.state?.project || {});
+  const [currentProject, setCurrentProject] = useState({});
 
   useEffect(()=>{
+    fetchTasks();
+    fetchProject();
     tg.ready();
     setUserId(tg.initDataUnsafe?.user?.id || 231279140)
-  }, [projectTasks])
+  }, [])
 
   console.log("CurProj", location, currentProject)
   const tasksByStatus = projectTasks.reduce((acc, task) => {
@@ -52,7 +54,7 @@ const ProjectOverview = () => {
     }
   };
 
-  const taskAdded = async (taskId) => {
+  const taskAdded = async () => {
     console.log('taskadded')
     await fetchProject();
     await fetchTasks();
@@ -83,12 +85,12 @@ const deleteTask = async (taskId) => {
       </div>
       <EditProject project={currentProject}/>
       <AddTask projectId={params.id} onAdded={taskAdded}/>
+      {
+        projectTasks && <TasksList rawTasks={projectTasks}/> 
+      }
     </div>)
       : <div>Loading</div>
       }
-      
-      {TasksList(projectTasks)}
-      
     </div>
   );
 };
