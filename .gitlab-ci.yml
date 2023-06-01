@@ -10,17 +10,7 @@ deploy:
   tags:
     - deploy_shell
   script:
-    - export
-    #clean
-    - if [ -d "$FOLDER" ]; then sudo rm -rf $FOLDER; fi
-    #create
-    - sudo mkdir $FOLDER
-    - sudo chmod 777 $FOLDER
-    - sudo cp -rf $CI_PROJECT_DIR/* $FOLDER
-    #- sudo cp -r /etc/nginx/ $FOLDER
-    - sudo chmod -R 777 $FOLDER
-    
-    - sudo docker-compose -f /opt/docker-compose/docker-compose.yml up -d --build nginx
+    - echo 12345
   only:
     - main
     - dev
