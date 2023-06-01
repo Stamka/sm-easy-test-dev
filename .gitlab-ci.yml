@@ -1,5 +1,5 @@
 variables:
-  FOLDER: "/opt/sm_frontend"
+  FOLDER: "/opt/frontend
   
 stages:
   - deploy
