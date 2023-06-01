@@ -5,6 +5,7 @@ import EditProject from '../EditProject';
 import MyButton from '../UI/button/MyButton';
 import '../UI/css/ProjectOverview.css'
 import PostService from '../API/PostService';
+import TasksList from '../TasksList';
 const tg = window.Telegram.WebApp;
 
 
@@ -13,13 +14,13 @@ const ProjectOverview = () => {
   const location = useLocation();
   const params = useParams()
   const [projectTasks, setProjectTasks] = useState(location.state?.projectTasks || []);
-  const currentProject = location.state?.project;
   const [userId, setUserId] = useState();
+  const [currentProject, setCurrentProject] = useState(location.state?.project || {});
 
   useEffect(()=>{
     tg.ready();
     setUserId(tg.initDataUnsafe?.user?.id || 231279140)
-  })
+  }, [projectTasks])
 
   console.log("CurProj", location, currentProject)
   const tasksByStatus = projectTasks.reduce((acc, task) => {
@@ -31,45 +32,37 @@ const ProjectOverview = () => {
     return acc;
   }, {});
 
+  const fetchTasks = async () => {
+    try {
+      const response = await PostService.getProjectTasks(params.id);
+      setProjectTasks(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  const fetchProject = async () => {
+    try {
+        console.log('ProjectOverview: fetchProject ',params.id);
+        const response = await PostService.getProject(params.id);
+        setCurrentProject(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+  };
+
+  const taskAdded = async (taskId) => {
+    console.log('taskadded')
+    await fetchProject();
+    await fetchTasks();
+  }
+
 const deleteTask = async (taskId) => {
   console.log(taskId);
   const response = await PostService.deleteTask(taskId);
   setProjectTasks(projectTasks.filter((_, i)=> _.id !== taskId))
 
-}
-
-const parseTaskStatusForButton = (status) => {
-  if (status === 'HOLD'){
-    return (
-      <div className="button-container">
-      <MyButton className="change-status-button">Начать поиск исполнителя</MyButton>
-      </div>)}
-  else if (status === 'FINDING_EXECUTOR'){
-    return (
-      <div className="button-container">
-        <MyButton className="change-status-button">Прекратить поиск исполнителя</MyButton>
-     </div>)
-  }
-  else if (status === 'TO_DO'){
-    return (
-      <div className="button-container">
-        <MyButton className="change-status-button">Взять задание в работу</MyButton>
-     </div>)
-  }
-  else if (status === 'IN_PROGRESS'){
-    return (
-      <div className="button-container">  
-        <MyButton className="change-status-button">To review</MyButton>
-        <MyButton className="change-status-button">Обратно в беклог</MyButton>
-     </div>)
-  }
-  else if (status === 'REVIEW'){
-    return (
-      <div className="button-container">
-        <MyButton className="change-status-button">Обратно в работу</MyButton>
-        <MyButton className="change-status-button">Сделано</MyButton>
-     </div>)
-  }
 }
 
   console.log("Project", params.id)
@@ -89,34 +82,12 @@ const parseTaskStatusForButton = (status) => {
         </div>
       </div>
       <EditProject project={currentProject}/>
-      <AddTask projectId={params.id}/>
+      <AddTask projectId={params.id} onAdded={taskAdded}/>
     </div>)
       : <div>Loading</div>
       }
       
-      {Object.entries(tasksByStatus).map(([status, tasks]) => (
-        <div className={`status-block ${status}`} key={status}>
-          <h2 className="status-heading">{status}</h2>
-          <ul className="task-list">
-            {tasks.map((task) => (
-              <li key={task.id}>
-                <div className="task-block">
-                <div className='task-name'>Name: {task.name}</div>
-                <div>Status: {task.status}</div>
-                <div>Description: {task.description}</div>
-                {parseTaskStatusForButton(task.status)}
-                {(task.creator_id === userId)
-                ? <MyButton onClick={() => deleteTask(task.id)}>Delete Task</MyButton>
-                : <></>}
-                    
-          
-                
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      {TasksList(projectTasks)}
       
     </div>
   );

@@ -13,17 +13,6 @@ const MainPage = () => {
     tg.ready();
   })
 
-  const onClose = () => {
-    tg.close();
-  }
-
-  const getPa = async () => {
-    const response = await PostService.getParsedPositions()
-    return response
-  }
-  console.log("Test Positions:", getPa())
-
-
   return (
     <div>
       Hello! {tg.initDataUnsafe?.user?.username}

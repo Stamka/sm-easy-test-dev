@@ -5,7 +5,7 @@ import MyButton from './UI/button/MyButton';
 import PostService from './API/PostService';
 
 
-const AddTask = ({projectId}) => {
+const AddTask = ({projectId, onAdded}) => {
   const [modal, setModal] = useState(false);
 
   const [positions, setPositions] = useState([]);
@@ -23,7 +23,7 @@ const AddTask = ({projectId}) => {
     <div>
         <MyButton onClick={() => setModal(true)}>Create New Task!</MyButton>
         <MyModal visible={modal} setVisible={setModal}>
-            <TaskForm action={"add"} positions={positions} projectId={projectId}/>
+            <TaskForm action={"add"} positions={positions} projectId={projectId} onAdded={onAdded}/>
         </MyModal>
     </div>
   )

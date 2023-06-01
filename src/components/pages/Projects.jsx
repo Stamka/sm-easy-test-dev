@@ -14,7 +14,7 @@ const Projects = () => {
   const fetchProjects = async (userId) => {
     try {
       const userProjects = await PostService.getUserProjects(userId);
-      console.log(userProjects.data);
+      console.log('fetching projects', userProjects.data);
       setUserProjects(userProjects.data);
     } catch (error) {
       console.log(error);
@@ -25,22 +25,10 @@ const Projects = () => {
     setUserProjects(prevProjects => prevProjects.filter(project => project.id !== projectId));
   };
 
-  const parseProjects = (userProjects) => {
-    if (userProjects !== undefined) {
-      //console.log("kekv", userProjects);
-      const projects = userProjects.map(project => project.name);
-      //console.log("asdasd", projects);
-      return projects.join(' ');
-    }
-  };
-
   useEffect(() => {
     tg.ready();
     setUserId(tg.initDataUnsafe?.user?.id || 231279140)
-    //console.log(userId);
     fetchProjects(userId);
-    //console.log("useeff", userProjects);
-    parseProjects(userProjects);
   }, [userId]);
 
   return (

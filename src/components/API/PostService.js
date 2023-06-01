@@ -217,7 +217,40 @@ export default class PostService {
         
     }
 
-    
+    static async getExecutorTasks(userId){
+        try {
+            const url = `https://sm-easy-test.site/api/users/${userId.toString()}/tasks`
+            const response = await axios.get(url, {
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                }
+              })
+            return response
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    static async getProject(projectId){
+        console.log("inside func getPositions")
+        try {
+            const url = `https://sm-easy-test.site/api/projects/${projectId.toString()}`
+            console.log(url)
+            const response = await axios.get(url, {
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                }
+              })
+            console.log("inside func getUserProjects", response)
+            return response;
+        } catch (error) {
+            console.log(error)
+        }
+        
+    }
 
 }
 

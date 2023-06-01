@@ -6,7 +6,7 @@ import Select from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 const tg = window.Telegram.WebApp;
 
-const TaskCreatingForm = ({ action, positions, projectId }) => {
+const TaskCreatingForm = ({ action, positions, projectId, onAdded }) => {
   const [title, setTitle] = useState('');
 
   const [userId, setUserId] = useState(0)
@@ -55,6 +55,7 @@ const TaskCreatingForm = ({ action, positions, projectId }) => {
     setTitle('');
     setDescription('');
     setCost(0);
+    onAdded();
   };
 
   console.log(positions)
