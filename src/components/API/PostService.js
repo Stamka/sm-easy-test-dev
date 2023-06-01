@@ -189,6 +189,22 @@ export default class PostService {
             
     }
 
+    static async addTask(task){
+        const url = "https://sm-easy-test.site/api/tasks/"
+        task = {...task, "id": uuidv4()}
+        const response = await axios.post(url, task,{
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            }
+          })
+        console.log("inside func addProjects", response)
+        return response
+
+   
+        
+}
+
     static async deleteTask(taskId){
         console.log("inside func taskDelte", taskId)
         try {

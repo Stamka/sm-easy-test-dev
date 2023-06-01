@@ -40,12 +40,19 @@ const TaskCreatingForm = ({ action, positions, projectId, onAdded }) => {
   
 
   const addTask = () => {
+
+    const jsDate = new Date(); // Get the current date and time
+    const isoString = jsDate.toISOString();
+
     const task = {
       "project_id": projectId,
       "name": title,
       "description": description,
       "price": cost,
-      "creator_id": userId
+      "creator_id": userId,
+      "created_date": isoString,
+      "position_id": taskPosition, 
+      "status": "HOLD"
 
     };
     console.log(task)
