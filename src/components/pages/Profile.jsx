@@ -5,6 +5,8 @@ import ProfileForm from '../ProfileForm';
 import MyModal from '../UI/MyModal/MyModal';
 import MyButton from '../UI/button/MyButton';
 import Loader from '../UI/Loader/Loader'
+import { BackButton } from '@vkruglikov/react-telegram-web-app';
+
 const tg = window.Telegram.WebApp;
 
 
@@ -34,7 +36,6 @@ const Profile = () => {
     
     useEffect(()=> {
         tg.ready();
-        tg.BackButton.show();
         setUserId(tg.initDataUnsafe?.user?.id || 231279140)
         fetchProfile();
     }, [userId])
@@ -108,6 +109,7 @@ const Profile = () => {
         <MyModal visible={modal} setVisible={setModal}>
             <ProfileForm userId={userId} previousProfile={profile} positions={positions}/>
         </MyModal>
+        <BackButton></BackButton>
     </div>
   )
 }
