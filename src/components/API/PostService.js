@@ -268,6 +268,29 @@ export default class PostService {
         
     }
 
+    static async changeTaskStatus(userId,taskId, newStatus){
+        console.log("inside func changeTaskStatus")
+        const queryParams = {
+            status: newStatus
+          };
+          
+        try {
+            const url = `https://sm-easy-test.site/api/users/${userId.toString()}/tasks/${taskId.toString()}/update_status`
+            console.log(url, userId, taskId, newStatus)
+            const response = await axios.put(url,null,{params: queryParams}, {
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                }
+              })
+            console.log("inside func getUserProjects", response)
+            return response;
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
 }
 
 

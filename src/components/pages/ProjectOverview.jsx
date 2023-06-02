@@ -54,7 +54,7 @@ const ProjectOverview = () => {
     }
   };
 
-  const taskAdded = async () => {
+  const actionTaskChanged = async () => {
     console.log('taskadded')
     await fetchProject();
     await fetchTasks();
@@ -84,9 +84,9 @@ const deleteTask = async (taskId) => {
         </div>
       </div>
       <EditProject project={currentProject}/>
-      <AddTask projectId={params.id} onAdded={taskAdded}/>
+      <AddTask projectId={params.id} onAdded={actionTaskChanged}/>
       {
-        projectTasks && <TasksList rawTasks={projectTasks}/> 
+        projectTasks && <TasksList rawTasks={projectTasks} actionTaskChanged={actionTaskChanged}/> 
       }
     </div>)
       : <div>Loading</div>
