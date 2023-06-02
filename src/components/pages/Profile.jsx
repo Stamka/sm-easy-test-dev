@@ -34,6 +34,7 @@ const Profile = () => {
     
     useEffect(()=> {
         tg.ready();
+        tg.BackButton.show();
         setUserId(tg.initDataUnsafe?.user?.id || 231279140)
         fetchProfile();
     }, [userId])
