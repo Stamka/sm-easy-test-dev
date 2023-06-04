@@ -189,6 +189,24 @@ export default class PostService {
             
     }
 
+    static async editProject(projectId,project){
+        const url = `https://sm-easy-test.site/api/projects/${projectId}`
+        const response = await axios.put(url, project,{
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            }
+          })
+        console.log("inside func editProjects", response)
+        return response
+
+   
+        
+}
+
+
+
+
     static async addTask(task){
         const url = "https://sm-easy-test.site/api/tasks/"
         task = {...task, "id": uuidv4()}

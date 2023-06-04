@@ -15,6 +15,7 @@ const ProjectForm = ({action, PrevProject = {}, userId}) => {
   const [description, setDescription] = useState('');
   const [budget, setBudget] = useState(0);
   const [newProject, setNewProject] = useState({})
+  const [projectId, setProjectId] = useState('')
 
   const [value, onChange] = useState(new Date());
   const [checkboxValue, setCheckboxValue] = useState(true);
@@ -37,14 +38,16 @@ const ProjectForm = ({action, PrevProject = {}, userId}) => {
   }
 
   useEffect(()=> {
-    tg.ready()
+    //tg.ready()
     setName(PrevProject?.name)
     setDescription(PrevProject?.description)
     setBudget(PrevProject?.budget)
+    setProjectId(PrevProject?.id)
 
-  }, [])
+  }, [PrevProject])
 
-  const addProject = async () => {
+
+  const addOrChangeProject = async (edit = false) => {
     const tempProject = {
       "user_id":userId,
       "name":name,
@@ -53,12 +56,22 @@ const ProjectForm = ({action, PrevProject = {}, userId}) => {
 
     }
     console.log("newProject=",tempProject);
-    const response = await PostService.addProject(tempProject);
+    const response = "";
+    if (edit){
+      tempProject.id = PrevProject?.id;
+      response = await PostService.editProject(PrevProject?.id,tempProject)
+
+    }else{
+      response = await PostService.addProject(tempProject);
+    }
+    
 
     console.log("kekv")
     console.log("Response=",response);
   }
-  console.log("Proejct userId=", userId);
+
+
+  console.log("Proejct userId=", userId, name, description);
   return (
     <form>
         <MyInput
@@ -88,8 +101,8 @@ const ProjectForm = ({action, PrevProject = {}, userId}) => {
         </div>
 
         {action === "add"
-        ? <MyButton onClick={addProject}>Добавить проект</MyButton>
-        : <MyButton>Изменить проект</MyButton> 
+        ? <MyButton onClick={ () => addOrChangeProject(false)}>Добавить проект</MyButton>
+        : <MyButton onClick={ () => addOrChangeProject(true)}>Изменить проект</MyButton> 
         }
 
     </form>

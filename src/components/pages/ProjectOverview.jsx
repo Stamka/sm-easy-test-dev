@@ -85,7 +85,7 @@ const deleteTask = async (taskId) => {
           )}
         </div>
       </div>
-      <EditProject project={currentProject}/>
+      <EditProject project={currentProject} userId={userId}/>
       <AddTask projectId={params.id} onAdded={actionTaskChanged}/>
       {
         projectTasks && <TasksList rawTasks={projectTasks} actionTaskChanged={actionTaskChanged}/> 
