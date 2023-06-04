@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import AddTask from '../AddTask';
 import EditProject from '../EditProject';
 import MyButton from '../UI/button/MyButton';
 import '../UI/css/ProjectOverview.css'
 import PostService from '../API/PostService';
 import TasksList from '../TasksList';
+import { BackButton } from '@vkruglikov/react-telegram-web-app';
 const tg = window.Telegram.WebApp;
 
 
 
 const ProjectOverview = () => {
   const location = useLocation();
-  const params = useParams()
+  const params = useParams();
+  const navigate = useNavigate();
   const [projectTasks, setProjectTasks] = useState([]);
   const [userId, setUserId] = useState();
   const [currentProject, setCurrentProject] = useState({});
@@ -91,6 +93,7 @@ const deleteTask = async (taskId) => {
     </div>)
       : <div>Loading</div>
       }
+    <BackButton onClick={ () => navigate(`/myprojects`) }></BackButton>
     </div>
   );
 };

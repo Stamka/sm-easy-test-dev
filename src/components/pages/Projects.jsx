@@ -4,9 +4,13 @@ import CreateProject from '../CreateProject';
 import { useFetching } from '../hooks/useFetching';
 import ProjectItem from '../ProjectItem';
 import MyButton from '../UI/button/MyButton';
+import { BackButton } from '@vkruglikov/react-telegram-web-app';
+import { useNavigate } from 'react-router';
 const tg = window.Telegram.WebApp;
 
 const Projects = () => {
+
+  const navigate = useNavigate();
   const [userId, setUserId] = useState(0);
   const [userProjects, setUserProjects] = useState();
   const [modal, setModal] = useState(false);
@@ -47,6 +51,7 @@ const Projects = () => {
           </div>
         : <h1>Loading</h1> 
       }
+        <BackButton onClick={ () => navigate(`/`) }></BackButton>
     </div>
   );
 };

@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import PostService from '../API/PostService';
 import TasksList from '../TasksList';
+import { BackButton } from '@vkruglikov/react-telegram-web-app';
+import { useNavigate } from 'react-router';
 
 const tg = window.Telegram.WebApp;
 
 const Tasks = () => {
+
+    const navigate = useNavigate();
 
     const [userId, setUserId] = useState(0);
     const [tasks, setTasks] = useState();
@@ -33,6 +37,7 @@ const Tasks = () => {
                 ? TasksList(tasks)
                 : <h1>Loading...</h1>
             }
+            <BackButton onClick={ () => navigate(`/`) }></BackButton>
         </div>
     )
 }
