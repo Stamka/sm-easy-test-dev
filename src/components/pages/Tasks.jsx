@@ -23,6 +23,11 @@ const Tasks = () => {
         }
       };
 
+      const actionTaskChanged = async () => {
+        console.log('taskadded')
+        await fetchTasks(userId);
+      }
+
     useEffect(() => {
         tg.ready();
         setUserId(tg.initDataUnsafe?.user?.id || 231279140);
@@ -34,7 +39,7 @@ const Tasks = () => {
             <div>Tasks</div>
             {
                 tasks
-                ? TasksList(tasks)
+                ? <TasksList rawTasks={tasks}  actionTaskChanged={actionTaskChanged}/>
                 : <h1>Loading...</h1>
             }
             <BackButton onClick={ () => navigate(`/`) }></BackButton>
