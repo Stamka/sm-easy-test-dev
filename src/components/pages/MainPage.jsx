@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import MyButton from '../UI/button/MyButton'
 import { useNavigate } from 'react-router-dom';
 import PostService from '../API/PostService';
+import classes from './MainPage.module.css'
 
 
 const tg = window.Telegram.WebApp;
@@ -11,18 +12,17 @@ const MainPage = () => {
   const navigate = useNavigate();
   useEffect(()=>{
     tg.ready();
+    tg.expand();
   })
 
   return (
-    <div>
-      Hello! {tg.initDataUnsafe?.user?.username}
-      <div>
-      </div>
-        <div>
-        <MyButton onClick={ () => navigate(`/mytasks`)} >My Tasks</MyButton>
-        <MyButton onClick={ () => navigate(`/myprojects`)} >My projects</MyButton>
-        <MyButton onClick={ () => navigate(`/profile`)} >My Profile</MyButton>
-        <MyButton onClick={ () => navigate(`/about`)} >About us</MyButton>
+    <div className={classes.MainPage}>
+        <h1>Hello! {tg.initDataUnsafe?.user?.username}</h1>
+        <div className={classes.ButtonContainer}>
+        <MyButton onClick={ () => navigate(`/mytasks`)} >Мои задачи</MyButton>
+        <MyButton onClick={ () => navigate(`/projects`)} >Мои проекты</MyButton>
+        <MyButton onClick={ () => navigate(`/profile`)} >Мой профиль</MyButton>
+        <MyButton onClick={ () => navigate(`/about`)} >Про нас</MyButton>
         </div>
     </div>
   )

@@ -6,6 +6,7 @@ import ProjectItem from '../ProjectItem';
 import MyButton from '../UI/button/MyButton';
 import { BackButton } from '@vkruglikov/react-telegram-web-app';
 import { useNavigate } from 'react-router';
+import classes from './Projects.module.css'
 const tg = window.Telegram.WebApp;
 
 const Projects = () => {
@@ -18,7 +19,7 @@ const Projects = () => {
   const fetchProjects = async (userId) => {
     try {
       const userProjects = await PostService.getUserProjects(userId);
-      console.log('fetching projects', userProjects.data);
+      console.log('fetching projects', userProjects);
       setUserProjects(userProjects.data);
     } catch (error) {
       console.log(error);
@@ -36,18 +37,20 @@ const Projects = () => {
   }, [userId]);
 
   return (
-    <div>
+    <div className={classes.Projects}>
       {console.log(userProjects)}
-      My projects
-      <div>
-        <MyButton onClick ={() => {setModal(true)}}>Create New Project</MyButton>
+      <h1>Мои проекты</h1>
+      <div className={classes.ContainerCreate}>
+        
+        <MyButton className={classes.AddButton} onClick ={() => {setModal(true)}}>
+            Новый проект
+        </MyButton>
         <CreateProject modal={modal} setModal={setModal}/>
       </div>
       { userProjects
-        ? <div>{userProjects.map((project, index) => 
+        ? <div className={classes.ContainerProjects}>{userProjects.map((project, index) => 
           <ProjectItem key={index} project={project} onDeleteProject={deleteProjectAndUpdate}/>
           )}
-          <hr/>
           </div>
         : <h1>Loading</h1> 
       }

@@ -73,27 +73,29 @@ const deleteTask = async (taskId) => {
   return (
     <div>
       {currentProject
-      ? (<div className="project-item">
-        <div className="project-info">
-        <div className="project-name">Project Name: {currentProject.name}</div>
-        <div className="project-description">Project Description: {currentProject.description}</div>
-        <div className="project-details">
-          {projectTasks.length > 0 ? (
-            <div>Total Tasks: {projectTasks.length}</div>
-          ) : (
-            <div>There are no tasks in your project</div>
-          )}
-        </div>
+      ? (<div className="project-container">
+            <div className="project-info">
+                <div className="project-name">{currentProject.name}</div>
+                <div className="project-description">{currentProject.description}</div>
+                <div className="project-details">
+                {projectTasks.length > 0 ? (
+                    <div>Всего задач: {projectTasks.length}</div>
+                ) : (
+                    <div>В этом проекте еще нет задач</div>
+                )}
+                </div>
+            </div>
+      <div className='button-container'>
+        <EditProject project={currentProject} userId={userId}/>
+        <AddTask projectId={params.id} onAdded={actionTaskChanged}/>
       </div>
-      <EditProject project={currentProject} userId={userId}/>
-      <AddTask projectId={params.id} onAdded={actionTaskChanged}/>
       {
         projectTasks && <TasksList rawTasks={projectTasks} actionTaskChanged={actionTaskChanged}/> 
       }
     </div>)
       : <div>Loading</div>
       }
-    <BackButton onClick={ () => navigate(`/myprojects`) }></BackButton>
+    <BackButton onClick={ () => navigate(`/projects`) }></BackButton>
     </div>
   );
 };

@@ -10,7 +10,7 @@ const ProjectItem = ({ project, onDeleteProject }) => {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const navigate = useNavigate();
   const handleOpenProject = () => {
-    navigate(`/myprojects/${project.id}`, { state: {projectTasks, project}});
+    navigate(`/projects/${project.id}`, { state: {projectTasks, project}});
   };
   const fetchTasks = async (projectId) => {
     try {
@@ -36,25 +36,27 @@ const ProjectItem = ({ project, onDeleteProject }) => {
   return (
     <div className="project-item">
       <div className="project-info">
-        <div className="project-name">Project Name: {project.name}</div>
+        <div className="project-name">{project.name}</div>
         <div className="project-details">
           {projectTasks.length > 0 ? (
-            <div>Total Tasks: {projectTasks.length}</div>
+            <div>Количество задач: {projectTasks.length}</div>
           ) : (
-            <div>There are no tasks in your project</div>
+            <div>В этом проекте еще нет задач</div>
           )}
         </div>
       </div>
-      <MyButton onClick={handleOpenProject} >Открыть</MyButton>
-      <MyButton onClick={()=>{setDeleteConfirmation(true)}}>Удалить проект</MyButton>
-      <MyModal  visible={deleteConfirmation} setVisible={setDeleteConfirmation}>
-            <MyButton onClick={() => deleteProject(project.id)}>
-              Удалить
-            </MyButton>
-            <MyButton>
-              Отмена
-            </MyButton>
-      </MyModal>
+      <div className='buttons-container'>
+        <MyButton id="open-button" onClick={handleOpenProject} >Открыть проект</MyButton>
+        <MyButton id="delete-button" onClick={()=>{setDeleteConfirmation(true)}}>Удалить проект</MyButton>
+        <MyModal  visible={deleteConfirmation} setVisible={setDeleteConfirmation}>
+                <MyButton onClick={() => deleteProject(project.id)}>
+                Удалить
+                </MyButton>
+                <MyButton>
+                Отмена
+                </MyButton>
+        </MyModal>
+      </div>
     </div>
   );
 };

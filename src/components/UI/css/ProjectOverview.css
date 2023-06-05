@@ -1,70 +1,71 @@
-.status-block {
-    margin-bottom: 30px;
-    align-items: center;
-  }
-  
-  .status-heading {
-    font-size: 20px;
-    font-weight: bold;
-    color: aqua;
-  }
-  
-  .task-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .task-list li {
-    margin-bottom: 10px;
-  }
-  
-  .status-block.HOLD {
-    background-color: lightblue;
-  }
-  .status-block.FINDING_EXECUTOR {
-    background-color: rgb(243, 246, 172);
-  }
+    .project-container {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 15px;
+    }
 
-  .status-block.TO_DO {
-    background-color: rgb(188, 160, 193);
-  }
-  
-  .status-block.IN_PROGRESS {
-    background-color: lightgreen;
-  }
-  .status-block.REVIEW {
-    background-color: lightyellow;
-  }
-  .status-block.DONE {
-    background-color: rgb(143, 230, 138);
-  }
+    .button-container {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+    }
 
-  .task-block {
-    width: 80%;
-    margin: 0 auto;
-    background: rgba(143, 169, 207, 0.9);
-    /* ул */
-    box-shadow: 2px 4px 4px rgba(35, 89, 169, 0.3);
-    border-radius: 15px;
-  }
+    #open-button
+    {
+        display: flex;
+        align-self: self-start;
+        color: whitesmoke;
+        height: 32px !important;
+        font-size: 14px;
+        font-weight: 400;
+        border-radius: 8px;
+        background-color: #132a56;
+        border-color: #132a56;
+    }
 
-  .task-name {
-    width: 133px;
-    margin-left: 20px;
-    margin-top: 50px;
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 17px;
-    display: flex;
+    .ContainerTasks
+    {
+        margin-top: 16px;
+        padding: 8px;
+        border-radius: 8px;
+        background-color: #161a1d;
+        display: flex;
+        flex-direction: column;
+    }
 
-    color: rgba(243, 244, 248, 0.75);
+    .ContainerTask
+    {
+        margin-top: 16px;
+        padding: 16px;
+        border-radius: 8px;
+        background-color: #1e2125;
+        display: flex;
+        flex-direction: column;
+    }
 
-  }
+    .task-list
+    {
+        padding-inline-start: 0 !important;
+    }
 
-  .button-container {
-    display: flex;
-    flex-direction: row-reverse;
-  }
-  
+    .status-block 
+    {
+        background-color: #161a1d;
+        color: whitesmoke;
+        border-radius: 4px;
+        padding: 10px 15px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    
+    h2
+    {
+        margin-block: 0 !important;
+    }
+
+    .TaskName
+    {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }

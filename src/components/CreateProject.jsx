@@ -14,8 +14,7 @@ const CreateProject = ({modal, setModal}) => {
     
   return (
     
-    <div>CreateProject
-
+    <div>
         <MyModal visible={modal} setVisible={setModal}>
             <ProjectForm action={"add"} userId={userId}/>
         </MyModal>  

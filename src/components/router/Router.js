@@ -11,7 +11,7 @@ export const routes = [
         {path:'/', element:<MainPage/>},
         {path:'/profile', element:<Profile/>},
         {path:'/mytasks', element:<Tasks/>},
-        {path:'/myprojects/:id', element:<ProjectOverview/>},
-        {path:'/myprojects', element:<Projects/>}
+        {path:'/projects/:id', element:<ProjectOverview/>},
+        {path:'/projects', element:<Projects/>}
 
 ]

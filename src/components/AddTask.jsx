@@ -3,6 +3,7 @@ import TaskForm from './TaskForm';
 import MyModal from './UI/MyModal/MyModal'
 import MyButton from './UI/button/MyButton';
 import PostService from './API/PostService';
+import './UI/css/ProjectOverview.css'
 
 
 const AddTask = ({projectId, onAdded}) => {
@@ -21,7 +22,7 @@ const AddTask = ({projectId, onAdded}) => {
   }, [])
   return (
     <div>
-        <MyButton onClick={() => setModal(true)}>Create New Task!</MyButton>
+        <MyButton id="open-button" onClick={() => setModal(true)}>Добавить задачу</MyButton>
         <MyModal visible={modal} setVisible={setModal}>
             <TaskForm action={"add"} positions={positions} projectId={projectId} onAdded={onAdded}/>
         </MyModal>
