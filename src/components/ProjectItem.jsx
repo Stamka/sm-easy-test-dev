@@ -28,8 +28,13 @@ const ProjectItem = ({ project, onDeleteProject }) => {
   const deleteProject = async (projectId) => {
     console.log("Delete project", projectId);
     const response = await PostService.deleteProject(projectId);
-    onDeleteProject(projectId); 
-    setDeleteConfirmation(false);
+    if (response.status === 200){
+      onDeleteProject(projectId); 
+      setDeleteConfirmation(false);
+    }else{
+      console.error("Cant't Delete project!")
+    }
+    
   }
 
 

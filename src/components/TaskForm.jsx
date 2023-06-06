@@ -13,7 +13,7 @@ const TaskForm = ({ action, positions, projectId, onAddedOrChanged, initTask={} 
   const [description, setDescription] = useState(initTask.description || '');
   const [cost, setCost] = useState(initTask.price || 0);
 
-  const [taskPosition, setTaskPosition] = useState("");
+  const [taskPosition, setTaskPosition] = useState(initTask.position_id || "");
 
   useEffect(()=> {
     tg.ready();
@@ -116,9 +116,13 @@ const TaskForm = ({ action, positions, projectId, onAddedOrChanged, initTask={} 
         onChange={handleCostChange}
       />
 
-      <div>Выбери позиции для поиска вакансий </div>
-      <Select onChange={handlePositionChange} isSearchable isClearable name="positions" options={positions} />
-
+      { (initTask?.status === undefined
+          || initTask?.status === "HOLD"
+          || initTask?.status === "FINDING_EXECUTOR"
+        ) && (<div>
+        <div>Выбери позиции для поиска вакансий </div>
+        <Select onChange={handlePositionChange} isSearchable isClearable name="positions" options={positions} />
+      </div>)}
       {action === 'add' ? (
         <MyButton onClick={ () => addOrChangeTask("add")}>Добавить задачу</MyButton>
       ) : (
