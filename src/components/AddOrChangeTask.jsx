@@ -6,7 +6,7 @@ import PostService from './API/PostService';
 import './UI/css/ProjectOverview.css'
 
 
-const AddTask = ({projectId, onAdded}) => {
+const AddOrChangeTask = ({projectId, onAddedOrChanged, action,task = {}}) => {
   const [modal, setModal] = useState(false);
 
   const [positions, setPositions] = useState([]);
@@ -20,14 +20,22 @@ const AddTask = ({projectId, onAdded}) => {
   useEffect(()=>{
     getPositions()
   }, [])
+
+  console.log("Task", task)
   return (
     <div>
-        <MyButton id="open-button" onClick={() => setModal(true)}>Добавить задачу</MyButton>
+
+
+        {(action === "add")
+          ? <MyButton id="open-button" onClick={() => setModal(true)}>Добавить задачу</MyButton>
+          : <MyButton id="open-button" onClick={() => setModal(true)}>Изменить задачу</MyButton>
+        }
+        
         <MyModal visible={modal} setVisible={setModal}>
-            <TaskForm action={"add"} positions={positions} projectId={projectId} onAdded={onAdded}/>
+            <TaskForm action={action} positions={positions} projectId={projectId} onAddedOrChanged={onAddedOrChanged} initTask={task}/>
         </MyModal>
     </div>
   )
 }
 
-export default AddTask
+export default AddOrChangeTask

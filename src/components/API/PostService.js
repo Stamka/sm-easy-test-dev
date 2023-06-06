@@ -198,14 +198,30 @@ export default class PostService {
             }
           })
         console.log("inside func editProjects", response)
-        return response
-
-   
-        
-}
+        return response      
+    }
 
 
 
+    
+    static async getTask(taskId){
+            
+        try {
+            const url = `https://sm-easy-test.site/api/tasks/${taskId.toString()}`
+            console.log(url)
+            const response = await axios.get(url, {
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                }
+            })
+            console.log("inside func getUserProjects", response)
+            return response;
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
 
     static async addTask(task){
         const url = "https://sm-easy-test.site/api/tasks/"
@@ -217,11 +233,21 @@ export default class PostService {
             }
           })
         console.log("inside func addProjects", response)
-        return response
+        return response    
+    }
 
-   
-        
-}
+
+    static async updateTask(taskId, task){
+        const url = `https://sm-easy-test.site/api/tasks/${taskId}`
+        const response = await axios.put(url, task,{
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            }
+          })
+        console.log("inside func addTask", response)
+        return response    
+    }
 
     static async deleteTask(taskId){
         console.log("inside func taskDelte", taskId)
@@ -308,6 +334,8 @@ export default class PostService {
         }
 
     }
+
+    
 
 }
 

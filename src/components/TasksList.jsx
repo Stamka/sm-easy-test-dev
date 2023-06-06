@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import PostService from './API/PostService';
 import MyButton from './UI/button/MyButton';
+import { useNavigate, useParams } from 'react-router';
 import './UI/css/ProjectOverview.css'
 const tg = window.Telegram.WebApp;
 
 
 
 const TasksList = ( {rawTasks, actionTaskChanged} ) => {
-
+    
+    const navigate = useNavigate();
+    const params = useParams();
 
     const [userId, setUserId] = useState();
 
@@ -15,6 +18,7 @@ const TasksList = ( {rawTasks, actionTaskChanged} ) => {
         tg.ready();
         setUserId(tg.initDataUnsafe?.user?.id || 231279140)
     }, [userId])
+
 
     const tasksByStatus = rawTasks.reduce((acc, task) => {
         if (acc[task.status]) {
@@ -37,7 +41,7 @@ const TasksList = ( {rawTasks, actionTaskChanged} ) => {
                             tasks.map((task) => (
                                 <li className='ContainerTask' key={task.id}>
                                     {console.log('task in return', task)}
-                                    {TaskCard(task, userId,actionTaskChanged)}
+                                    {TaskCard(task, userId,actionTaskChanged, navigate, params.id)}
                                 </li>
                             ))
                         }
@@ -50,7 +54,8 @@ const TasksList = ( {rawTasks, actionTaskChanged} ) => {
 
  
 
-const TaskCard = (task, userId, actionTaskChanged) => {
+const TaskCard = (task, userId, actionTaskChanged, navigate, projectId) => {
+    
 
     const changeTaskStatus = async (taskId, taskStatus) => {
         console.log(taskStatus);
@@ -58,6 +63,10 @@ const TaskCard = (task, userId, actionTaskChanged) => {
         console.log("ChangeTask: ", response)
         actionTaskChanged();
      }
+
+    const handleOpenTask = () => {
+        navigate(`/projects/${projectId}/tasks/${task.id}`);
+      };
      
     const statusLabels = {
         'HOLD': [{'Начать поиск исполнителя':'FINDING_EXECUTOR'}],
@@ -77,6 +86,7 @@ const TaskCard = (task, userId, actionTaskChanged) => {
             </div>
         )
     }
+
     return (
         <div>
             <div>
@@ -84,6 +94,7 @@ const TaskCard = (task, userId, actionTaskChanged) => {
                 <div className='TaskDescription'>{task.description}</div>
             </div>
             <div>{task.price}</div>
+            <MyButton onClick={handleOpenTask}>Открыть таску</MyButton>
             {parseTaskStatusForButton(task.status, task.id)}
         </div>
     );

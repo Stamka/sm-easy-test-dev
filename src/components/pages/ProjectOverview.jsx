@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router';
-import AddTask from '../AddTask';
+import AddOrChangeTask from '../AddOrChangeTask';
 import EditProject from '../EditProject';
 import MyButton from '../UI/button/MyButton';
 import '../UI/css/ProjectOverview.css'
@@ -62,12 +62,7 @@ const ProjectOverview = () => {
     await fetchTasks();
   }
 
-const deleteTask = async (taskId) => {
-  console.log(taskId);
-  const response = await PostService.deleteTask(taskId);
-  setProjectTasks(projectTasks.filter((_, i)=> _.id !== taskId))
 
-}
 
   console.log("Project", params.id)
   return (
@@ -87,7 +82,7 @@ const deleteTask = async (taskId) => {
             </div>
       <div className='button-container'>
         <EditProject project={currentProject} userId={userId}/>
-        <AddTask projectId={params.id} onAdded={actionTaskChanged}/>
+        <AddOrChangeTask projectId={params.id} onAddedOrChanged={actionTaskChanged} action={"add"}/>
       </div>
       {
         projectTasks && <TasksList rawTasks={projectTasks} actionTaskChanged={actionTaskChanged}/> 
