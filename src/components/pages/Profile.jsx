@@ -7,6 +7,7 @@ import MyButton from '../UI/button/MyButton';
 import Loader from '../UI/Loader/Loader'
 import { BackButton } from '@vkruglikov/react-telegram-web-app';
 import { useNavigate } from 'react-router';
+import classes from './Profile.module.css'
 
 const tg = window.Telegram.WebApp;
 
@@ -74,26 +75,39 @@ const Profile = () => {
   return (
 
     <div>
-            <div>
+            
                 {
                 
                 isProfileLoading
                 ? <Loader/>
                 
                 : profile.id
-                    ? <div>
-                        Profile
-                        <br/>
-                        Имя = {profile.first_name}
-                        <br/>
-                        Фамилия = {profile.last_name}
-                        <br/>
-                        Описание = {profile.description}
-                        <br/>
-                        Позиции = {getNamesOfUserPositions(profile.user_positions, positions).join(" ")}
-                        <br/>
-                        Skills = {profile.user_skills.join(" ")}
-                        <br/>
+                    ? <div className={classes.Profile}>
+                        <div className={classes.Name}>
+                            <span> {profile.first_name}</span>
+                            <span>{profile.last_name}</span>
+                        </div>
+                        <div className={classes.Description}>
+                            <h1>Описание:</h1>
+                            <span>{profile.description}</span>
+                        </div>
+                        <div className={classes.SkillsContainer}>
+                            <h1>Ключевые навыки</h1>
+                            <div className={classes.Skills}>
+                                
+                                {profile.user_skills.map( (skill) => (
+                                    <div>{skill}</div>
+                                    
+                                ))}
+                            </div>
+                        </div>
+                        <div>
+                            <h1>Специализации</h1>
+                          {getNamesOfUserPositions(profile.user_positions, positions).join(" ")}
+                        </div>
+                        
+              
+                        
                         <MyButton style={{marginTop: '50px'}} onClick ={() => {setModal(true)}}> 
                             Изменить анкету
                         </MyButton>
@@ -107,7 +121,6 @@ const Profile = () => {
 
                 
                 }
-            </div>
         <MyModal visible={modal} setVisible={setModal}>
             <ProfileForm userId={userId} previousProfile={profile} positions={positions}/>
         </MyModal>

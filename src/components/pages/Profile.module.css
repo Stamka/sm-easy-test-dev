@@ -1,0 +1,76 @@
+.Profile {
+    display: flex;
+    flex-direction: column;
+    padding-left: 5%;
+    padding-right: 5%;
+    margin-top: 0 !important;
+    padding-top: 2%;
+    gap: 10px;
+    
+}
+
+.Name {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    font-size: 32px;
+}
+
+.Description {
+    margin-bottom: 0;
+
+    > h1
+    {
+        font-size: 25px !important;
+        font-weight: 400;
+    }
+
+    > span
+    {
+        font-style: normal;
+        font-weight: 400 !important;
+        font-size: 16px;
+        line-height: 25px;
+
+
+    }
+}
+
+
+.Positions {
+
+}
+
+.SkillsContainer{
+    > h1
+    {
+       
+        font-size: 25px !important;
+        font-weight: 400 !important;
+    };
+}
+
+.Skills {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    background-color: #161a1d;
+    padding: 16px;
+    padding-top: 6px;
+    > span
+    {
+
+    }
+
+    > div
+    {
+        margin-top: 10px;
+        margin-right: 16px;
+        border-radius: 8px;
+        background-color: #132a56;
+        border-color: #132a56;
+        padding: 10px 15px;
+        color: whitesmoke;
+        
+    }
+}

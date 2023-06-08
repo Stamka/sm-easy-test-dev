@@ -56,6 +56,24 @@ const ProfileForm = ({ userId, previousProfile, positions }) => {
     console.log("tempProfi", tempProfile);
     setProfile(tempProfile);
   };
+
+  const createSkillLabels = (skills) => {
+    let labelsArray = skills.map((skill) => (
+      {"value":skill, "label":skill}
+    ))
+
+    return labelsArray;
+  }
+
+  const createPostionsLabels = (userPositions) => {
+    console.log(userPositions)
+    let positionsLabels = positions.filter( pos => userPositions.includes(pos.value))
+
+    let labelsArray = positionsLabels.map((pos) => (
+      {"value":pos.value, "label":pos.label}
+    ))
+    return labelsArray
+  }
   
 
   return (
@@ -83,11 +101,12 @@ const ProfileForm = ({ userId, previousProfile, positions }) => {
       />
       <div>
         <div>Выбери позиции для поиска вакансий </div>
-        <Select onChange={handlePositionChange} isMulti isSearchable isClearable name="positions" options={positions} />
+        {console.log("Pos", positions)}
+        <Select onChange={handlePositionChange} value={createPostionsLabels(profile.user_positions || [])}isMulti isSearchable isClearable name="positions" options={positions} />
       </div>
       <div>
         <div>Укажите свои навыки </div>
-        <CreatableSelect onChange={handleSkillsChange} isMulti isSearchable isClearable name="skills"/>
+        <CreatableSelect onChange={handleSkillsChange} value={createSkillLabels(profile.user_skills || [])} isMulti isSearchable isClearable name="skills"/>
       </div>
       <MyButton onClick={updateProfile}>Изменить профиль</MyButton>
     </form>
