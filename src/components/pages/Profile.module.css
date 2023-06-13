@@ -37,9 +37,7 @@
 }
 
 
-.Positions {
 
-}
 
 .SkillsContainer{
     > h1
@@ -57,10 +55,7 @@
     background-color: #161a1d;
     padding: 16px;
     padding-top: 6px;
-    > span
-    {
 
-    }
 
     > div
     {
@@ -68,6 +63,42 @@
         margin-right: 16px;
         border-radius: 8px;
         background-color: #132a56;
+        border-color: #132a56;
+        padding: 10px 15px;
+        color: whitesmoke;
+        
+    }
+}
+
+.PositionsContainer {
+    > h1
+    {
+    
+        font-size: 25px !important;
+        font-weight: 400 !important;
+    };
+
+}
+
+.Positions {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    background-color: #161a1d;
+    padding: 16px;
+    padding-top: 6px;
+    width: 30%;
+
+
+    > div
+    {
+
+        
+        margin-top: 10px;
+        margin-right: 16px;
+        border-radius: 8px;
+        background-color: #f5982e;
         border-color: #132a56;
         padding: 10px 15px;
         color: whitesmoke;

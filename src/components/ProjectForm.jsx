@@ -38,11 +38,16 @@ const ProjectForm = ({action, PrevProject = {}, userId}) => {
   }
 
   useEffect(()=> {
-    //tg.ready()
-    setName(PrevProject?.name)
-    setDescription(PrevProject?.description)
-    setBudget(PrevProject?.budget)
-    setProjectId(PrevProject?.id)
+    tg.ready()
+    console.log(PrevProject)
+    if (Object.keys(PrevProject).length !== 0){
+      setName(PrevProject?.name)
+      setDescription(PrevProject?.description)
+      setBudget(PrevProject?.budget)
+      setProjectId(PrevProject?.id)
+    }
+    
+    
 
   }, [PrevProject])
 
@@ -58,8 +63,8 @@ const ProjectForm = ({action, PrevProject = {}, userId}) => {
     console.log("newProject=",tempProject);
     const response = "";
     if (edit){
-      tempProject.id = PrevProject?.id;
-      response = await PostService.editProject(PrevProject?.id,tempProject)
+      tempProject.id = projectId
+      response = await PostService.editProject(tempProject.id,tempProject)
 
     }else{
       response = await PostService.addProject(tempProject);

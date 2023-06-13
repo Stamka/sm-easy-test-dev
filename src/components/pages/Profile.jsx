@@ -8,7 +8,6 @@ import Loader from '../UI/Loader/Loader'
 import { BackButton } from '@vkruglikov/react-telegram-web-app';
 import { useNavigate } from 'react-router';
 import classes from './Profile.module.css'
-
 const tg = window.Telegram.WebApp;
 
 
@@ -101,9 +100,16 @@ const Profile = () => {
                                 ))}
                             </div>
                         </div>
-                        <div>
+                        <div className={classes.PositionsContainer}>
                             <h1>Специализации</h1>
-                          {getNamesOfUserPositions(profile.user_positions, positions).join(" ")}
+                            <div className={classes.Positions}>
+                              {getNamesOfUserPositions(profile.user_positions, positions).map( (pos) => (
+                                <div>{pos}</div>
+                              ))}
+
+                            </div>
+                          
+                          {}
                         </div>
                         
               
