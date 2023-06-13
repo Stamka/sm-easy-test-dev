@@ -12,19 +12,32 @@ const tg = window.Telegram.WebApp;
 const Projects = () => {
 
   const navigate = useNavigate();
-  const [userId, setUserId] = useState(0);
+  const [userId, setUserId] = useState(tg.initDataUnsafe?.user?.id || 231279140);
   const [userProjects, setUserProjects] = useState();
   const [modal, setModal] = useState(false);
 
-  const fetchProjects = async (userId) => {
+  const fetchProjects = async () => {
     try {
-      const userProjects = await PostService.getUserProjects(userId);
-      console.log('fetching projects', userProjects);
-      setUserProjects(userProjects.data);
+
+      console.log("UserId", userId)
+      
+      const response = await PostService.getUserProjects(userId);
+      console.log('fetching projects', response);
+      console.log(response.data, response.data.length > 0);
+      if (response.data && response.data.length > 0) {
+        setUserProjects(response.data);
+      } else {
+        // If the response is empty, refetch the projects after a certain delay
+        setTimeout(() => {
+          fetchProjects();
+        }, 1000); // You can adjust the delay (in milliseconds) as needed
+      }
     } catch (error) {
       console.log(error);
     }
   };
+  
+  
 
   const deleteProjectAndUpdate = (projectId) => {
     setUserProjects(prevProjects => prevProjects.filter(project => project.id !== projectId));
@@ -33,7 +46,10 @@ const Projects = () => {
   useEffect(() => {
     tg.ready();
     setUserId(tg.initDataUnsafe?.user?.id || 231279140)
-    fetchProjects(userId);
+  }, []);
+
+  useEffect(() => {
+    fetchProjects();
   }, [userId]);
 
   return (

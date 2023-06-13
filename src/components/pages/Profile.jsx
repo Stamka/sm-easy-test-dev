@@ -23,17 +23,21 @@ const Profile = () => {
 
     const [modal, setModal] = useState(false);
 
-    const [fetchProfile, isProfileLoading, profileError] = useFetching( async () => {
-        console.log("id=", userId)
-        const response = await PostService.getProfile(userId);
-        
-        console.log("Profile=", response.data)
-        if (response.date === {} || response.data === null || response.data === undefined){
-            setProfile({})
-        } else{
-        setProfile(response.data)
-        }
-        })
+    const [fetchProfile, isProfileLoading, profileError] = useFetching(async () => {
+      console.log("id=", userId);
+      const response = await PostService.getProfile(userId);
+    
+      console.log("Profile=", response.data);
+      if (!response.data || Object.keys(response.data).length === 0) {
+        // If the response is empty or null, refetch the profile after a certain delay
+        setTimeout(() => {
+          fetchProfile();
+        }, 3000); // You can adjust the delay (in milliseconds) as needed
+      } else {
+        setProfile(response.data);
+      }
+    });
+    
 
     
     useEffect(()=> {

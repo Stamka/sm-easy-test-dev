@@ -10,29 +10,39 @@ const Tasks = () => {
 
     const navigate = useNavigate();
 
-    const [userId, setUserId] = useState(0);
+    const [userId, setUserId] = useState(tg.initDataUnsafe?.user?.id || 231279140);
     const [tasks, setTasks] = useState();
 
-    const fetchTasks = async (userId) => {
-        try {
-          const tasks = await PostService.getExecutorTasks(userId);
-          console.log('fetching executor tasks', tasks.data);
-          setTasks(tasks.data);
-        } catch (error) {
-          console.log(error);
+    const fetchTasks = async () => {
+      try {
+        const response = await PostService.getExecutorTasks(userId);
+        console.log('fetching executor tasks', response);
+        if (response && response.length > 0) {
+          setTasks(response);
+        } else {
+          // If the response is empty, refetch the tasks after a certain delay
+          setTimeout(() => {
+            fetchTasks(userId);
+          }, 3000); // You can adjust the delay (in milliseconds) as needed
         }
-      };
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
       const actionTaskChanged = async () => {
         console.log('taskadded')
-        await fetchTasks(userId);
+        await fetchTasks();
       }
 
     useEffect(() => {
         tg.ready();
         setUserId(tg.initDataUnsafe?.user?.id || 231279140);
-        fetchTasks(userId);
-    }, [userId]);
+    }, []);
+
+    useEffect(() => {
+      fetchTasks();
+     }, [userId]);
 
     return (
         <div>

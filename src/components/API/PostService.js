@@ -1,5 +1,19 @@
 import axios from "axios"
+import axiosRetry from "axios-retry";
 import { v4 as uuidv4 } from 'uuid';
+
+
+axiosRetry(axios, {
+  retries: 3, // number of retries
+  retryDelay: (retryCount) => {
+      console.log(`retry attempt: ${retryCount}`);
+      return retryCount * 2000; // time interval between retries
+  },
+  retryCondition: (error) => {
+      // if retry condition is not specified, by default idempotent requests are retried
+      return error.response.status !== 200 || error.response.status !== 403;
+  },
+});
 
 export default class PostService {
     static async getAll(limit = 10, page = 1){
@@ -277,20 +291,20 @@ export default class PostService {
         
     }
 
-    static async getExecutorTasks(userId){
-        try {
-            const url = `https://sm-easy-test.site/api/users/${userId.toString()}/tasks`
-            const response = await axios.get(url, {
-                headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json'
-                }
-              })
-            return response
-
-        } catch (error) {
-            console.log(error)
-        }
+    static async getExecutorTasks(userId) {
+      try {
+        const url = `https://sm-easy-test.site/api/users/${userId.toString()}/tasks`;
+        const response = await axios.get(url, {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        });
+        return response.data;
+      } catch (error) {
+        console.log(error);
+        throw error; // Rethrow the error to handle it in the calling code
+      }
     }
 
     static async getProject(projectId){

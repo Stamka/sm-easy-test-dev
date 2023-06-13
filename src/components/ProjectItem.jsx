@@ -54,6 +54,7 @@ const ProjectItem = ({ project, onDeleteProject }) => {
         <MyButton id="open-button" onClick={handleOpenProject} >Открыть проект</MyButton>
         <MyButton id="delete-button" onClick={()=>{setDeleteConfirmation(true)}}>Удалить проект</MyButton>
         <MyModal  visible={deleteConfirmation} setVisible={setDeleteConfirmation}>
+                <div>Вы уверены, что хотите удалить проект <div>{project.name}</div></div>
                 <MyButton onClick={() => deleteProject(project.id)}>
                 Удалить
                 </MyButton>

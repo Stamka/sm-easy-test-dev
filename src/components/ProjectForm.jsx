@@ -54,26 +54,34 @@ const ProjectForm = ({action, PrevProject = {}, userId}) => {
 
   const addOrChangeProject = async (edit = false) => {
     const tempProject = {
-      "user_id":userId,
-      "name":name,
-      "description":description,
-      "budget":budget || 0
-
-    }
-    console.log("newProject=",tempProject);
-    const response = "";
-    if (edit){
-      tempProject.id = projectId
-      response = await PostService.editProject(tempProject.id,tempProject)
-
-    }else{
+      "user_id": userId,
+      "name": name,
+      "description": description,
+      "budget": budget || 0
+    };
+    console.log("newProject=", tempProject);
+  
+    let response;
+    if (edit) {
+      tempProject.id = projectId;
+      response = await PostService.editProject(tempProject.id, tempProject);
+    } else {
       response = await PostService.addProject(tempProject);
     }
-    
-
-    console.log("kekv")
-    console.log("Response=",response);
-  }
+  
+    console.log("kekv");
+    console.log("Response=", response);
+  
+    if (response && response.data) {
+      // If the response is not empty, perform necessary actions
+      // ...
+    } else {
+      // If the response is empty, refetch the projects after a certain delay
+      setTimeout(() => {
+        addOrChangeProject(edit);
+      }, 3000); // You can adjust the delay (in milliseconds) as needed
+    }
+  };  
 
 
   console.log("Proejct userId=", userId, name, description);
