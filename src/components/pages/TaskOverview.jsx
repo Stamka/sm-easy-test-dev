@@ -5,6 +5,7 @@ import PostService from '../API/PostService'
 import MyButton from '../UI/button/MyButton'
 import MyModal from '../UI/MyModal/MyModal'
 import AddOrChangeTask from '../AddOrChangeTask'
+import TaskComments from '../TaskComments'
 
 
 const tg = window.Telegram.WebApp;
@@ -20,22 +21,14 @@ const TaskOverview = () => {
   const navigate = useNavigate();
 
   const fetchTask = async () => {
-
     const response = await PostService.getTask(params.taskid)
-
     if (response.status === 200){
         setTask(response.data)
         console.log("Task successfully fetched", response.data)
     }else{
         console.log("Error in fetching task")
     }
-
-   
-
-
   }
-
-
 
   useEffect( 
     () => {
@@ -93,10 +86,13 @@ const TaskOverview = () => {
                         <AddOrChangeTask projectId={params.id} onAddedOrChanged={onAddedOrChanged} action={"update"} task={task}/> 
                         <MyButton onClick={() => {deleteTask(task.id)}}>удалить таску</MyButton>
                     </div>
+                    
                     )
                 }
-
-                <div>Commenets </div>
+                <div>
+                  <div>Commenets </div>
+                  <TaskComments taskId={task.id}/>
+                </div>
             </div>)
         }
 

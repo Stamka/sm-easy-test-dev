@@ -18,6 +18,10 @@ const ProjectOverview = () => {
   const [projectTasks, setProjectTasks] = useState([]);
   const [userId, setUserId] = useState();
   const [currentProject, setCurrentProject] = useState({});
+  const [currentSpending, setCurrentSpending] = useState(0);
+  const [doneTasksCount, setDoneTasksCount] = useState(0);
+  const [findingExecutorTasksCount, setFindingExecutorTasksCount] = useState(0);
+  const [taskWithExecutorCount, setTaskWithExecutorCount] = useState(0);
 
   useEffect(()=>{
     fetchTasks();
@@ -25,6 +29,10 @@ const ProjectOverview = () => {
     tg.ready();
     setUserId(tg.initDataUnsafe?.user?.id || 231279140)
   }, [])
+
+  useEffect(() => {
+    setCurrentSpending(calculateBudget());
+  }, [projectTasks])
 
   console.log("CurProj", location, currentProject)
   const tasksByStatus = projectTasks.reduce((acc, task) => {
@@ -40,10 +48,19 @@ const ProjectOverview = () => {
     try {
       const response = await PostService.getProjectTasks(params.id);
       setProjectTasks(response.data);
+      const doneTasks = response.data.filter(task => task.status === "DONE");
+      const findingExecutorTasks = response.data.filter(task => task.status === "FINDING_EXECUTOR");
+      const taskWithExecutor = response.data.filter(task => (task.status !== "FINDING_EXECUTOR" && task.status !== "HOLD"));
+      setDoneTasksCount(doneTasks.length);
+      setFindingExecutorTasksCount(findingExecutorTasks.length);
+      setTaskWithExecutorCount(taskWithExecutor.length);
+
     } catch (error) {
       console.log(error);
     }
   };
+
+
 
 
   const fetchProject = async () => {
@@ -62,6 +79,17 @@ const ProjectOverview = () => {
     await fetchTasks();
   }
 
+  const calculateBudget = () => {
+    console.log("Proj. Budget: ", currentProject.budget);
+    console.log(projectTasks);
+    var totalPrice = 0;
+    projectTasks.forEach(function(task) {
+      totalPrice += task.price;
+    });
+    console.log("Total price: ", totalPrice)
+    return totalPrice;
+  }
+
 
 
   console.log("Project", params.id)
@@ -74,10 +102,21 @@ const ProjectOverview = () => {
                 <div className="project-description">{currentProject.description}</div>
                 <div className="project-details">
                 {projectTasks.length > 0 ? (
-                    <div>Всего задач: {projectTasks.length}</div>
+                    <div>
+                      <div>Всего задач: {projectTasks.length}</div>
+                      <div>Сейчас исполнители найдены для {taskWithExecutorCount} из {projectTasks.length} задач</div>
+                      <div>Ищется {findingExecutorTasksCount} исполнителей</div>
+                      <div>Количество задач со статусом "DONE": {doneTasksCount}</div>
+                    </div>
                 ) : (
                     <div>В этом проекте еще нет задач</div>
                 )}
+                <div>
+                  {(currentProject.budget)
+                    ? <div>Израсходовано: {currentSpending} из {currentProject.budget}</div>
+                    : <div>Израсходовано: {currentSpending}</div>
+                  }
+                </div>
                 </div>
             </div>
       <div className='button-container'>

@@ -108,6 +108,20 @@ export default class PostService {
         }
         
     }
+    static async getUser(userId){
+      console.log("inside func getProfile", userId, typeof(userId))
+      try {
+          const url = 'https://sm-easy-test.site/api/users/'+ userId.toString();
+          console.log("URL=",url);
+          const response = await axios.get(url);
+          console.log(response)
+          return response;
+      } catch (error) {
+          console.log(error)
+      }
+      
+     }
+
     static async getPositions(){
         console.log("inside func getPositions")
         try {
@@ -196,7 +210,8 @@ export default class PostService {
                   'Content-Type': 'application/json'
                 }
               })
-            console.log("inside func addProjects", response)
+            const a = "kekv"
+            console.log("inside func addProjects", response.data)
             return response
 
        
